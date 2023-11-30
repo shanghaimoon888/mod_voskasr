@@ -1,41 +1,9 @@
-/*
- * FreeSWITCH Modular Media Switching Software Library / Soft-Switch Application
- * Copyright (C) 2005-2013, Anthony Minessale II <anthm@freeswitch.org>
- *
- * Version: MPL 1.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is FreeSWITCH Modular Media Switching Software Library / Soft-Switch Application
- *
- * The Initial Developer of the Original Code is
- * Anthony Minessale II <anthm@freeswitch.org>
- * Portions created by the Initial Developer are Copyright (C)
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *
- * Brian West <brian@freeswitch.org>
- * Christopher Rienzo <chris.rienzo@grasshopper.com>
- * Nickolay V. Shmyrev <nshmyrev@alphacephei.com>
- *
- * mod_vosk - Speech recognition using Vosk server
- *
- *
- */
+
 
 #define __PRETTY_FUNCTION__ __func__
-#define KS_PLAT_WIN
+
 #include <switch.h>
-//#include <netinet/tcp.h>
+#include <netinet/tcp.h>
 #include "libks/ks.h"
 
 
@@ -146,8 +114,8 @@ static switch_status_t vosk_asr_feed(switch_asr_handle_t *ah, void *data, unsign
 	}
 
 	poll_result = kws_wait_sock(vosk->ws, 0, KS_POLL_READ | KS_POLL_ERROR);
-	//if (poll_result != 17) {
-	if (poll_result != (KS_POLL_READ | KS_POLL_RDNORM)) {
+
+	if (poll_result != KS_POLL_READ) {
 		//switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_DEBUG, "Received Poll Failed\n");
 		switch_mutex_unlock(vosk->mutex);
 		return SWITCH_STATUS_SUCCESS;
